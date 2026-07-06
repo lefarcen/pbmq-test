@@ -1,0 +1,12 @@
+name: queue-check
+on:
+  merge_group:
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: gate
+        run: |
+          if grep -q BROKEN status.txt; then echo "status.txt is BROKEN → fail"; exit 1; fi
+          echo "status.txt OK → pass"
